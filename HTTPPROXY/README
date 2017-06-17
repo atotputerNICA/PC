@@ -1,0 +1,37 @@
+--------------------------------------------------------------------------------
+                  README NICA DANA - MARIA 321 CD
+--------------------------------------------------------------------------------
+
+In implementarea temei am folosit scheletul de cod al laboratoarelor 8(Multi-
+plexare TCP) si 11(HTTP) pentru crearea socketului HTTP.In server se pot primi
+mesaje pe socketul pentru standard input unde se poate citi date de la tastatura
+comanda QUIT(serverul se inchide) si se trimit pe socketul TCP catre clienti, de
+la socketul TCP (in acest caz se face recv pentru a primi o comanda de la client,
+comanda ce va fi parsata si trimisa pe soketul nou deschis catre serverul http).
+In server in multimea de citire se afla initial descriptorul pentru socketul
+inactiv.Este adaugat socketul pentru citirea de la tastatura .Pe masura ce se
+conecteaza clienti,in multime vor fi adaugati si descriptorii pentru socketii
+activi.Daca un client se deconecteaza de la server socketul va fi scos din
+multimea de citire a serverului.
+
+Pentru a implementa structura cache-ului am implementat o lista simplu inlantuita,
+(in lib.h structura httpNode care contine urmatoarele campuri command pentru
+a retine commanda primita de la client, httpPage pentru a retine pagina html
+primita de la serverul http si un pointer catre urmatoarea intrare in cache.
+Functii ajutatoare createNode care adauga un nod la finalul listei. Pentru a avea
+acces la cache folosesc 2 variable globale,2 pointeri la inceputul si finalul
+listei.
+
+Pentru parsare folosesc functia parseURL care primeste ca parametru comanda ce
+urmeaza a fi parsata si un pointer catre un int ce reprezinta portul pentru
+socketul de http.Pentru a obtine host nameul si portul din comanda sunt obtinuti
+indicii de inceput al host nameului,de sfarsit al host nameului si de final al
+portului.Daca portul nu este specificat sau este invalid este setat ca 80.
+
+Dupa ce serverul proxy primeste commanda verifica daca aceasta exista in cache.
+Daca in cache exista comanda primita de la client este trimis clientului pagina
+stocata in nodul gasit.In caz contrar este folosita o structura hostent obtinuta
+cu ajutorul functiei gethostbyname.Este creat socketul pentru conexiunea cu
+serverul hrttp.Se face connect pe socket dupa care sunt primite date de la server,
+trimise la client,se actualizeaza in cache dupa care socketul pentru conexiunea
+cu clientul este inchis.
