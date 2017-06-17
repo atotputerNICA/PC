@@ -1,0 +1,51 @@
+-------------------------------------------------------------------------------------------
++                             README - NICA DANA - MARIA 321CD 			                  +
+-------------------------------------------------------------------------------------------
+
+Pentru a parsa informatiile din fisierul de intrare folosesc functia readInput
+care intoarce un vector de structuri de tipul Person,folosit pentru a stoca informatiile
+despre utilizatori,informatii ce vor fi updatate dupa fiecare comanda valida a unui
+client.Pentru fiecare client pe langa informatiile din fisierul de input se retin
+si starea acestuia blocat,logat,numar de incercari gresite ale pinului.
+Daca un client se logheaza numarul de incercari gresite ale pinului sunt resetate la 0
+
+
+-----------
++   TCP   + Ca punct de plecare pentru client si server am folosit scheletul de cod
++   UDP   + din laboratorul 7 si 8. Atat in client cat si in server am apelat select.
+----------- In client se pot primi mesaje de la socketul pentru standard input unde
+se citesc date de la tastatura si se trimit pe socketul TCP, de la socketul TCP 
+(in acest caz se face recv pentru a primi outputul comenzii care va fi scris in fisierul
+de log) si de la socketul UDP. In server in multimea de citire se afla initial descriptorul
+pentru socketul inactiv.Este adaugat socketul pentru citirea de la tastatura unde serverul
+primeste comanda quit si socketul pentru serverul UDP.Pe masura ce se conecteaza clienti,in
+multime vor fi adaugati si descriptorii pentru socketii activi.Daca un client se deconecteaza
+de la server(quit) socketul va fi scos din multimea de citire a serverului.
+
+
+
+----------- 
++  LOGIN  +  Un card este blocat daca se introduce de 3 ori pinul gresit indiferent
+-----------  de terminal. Daca intr-un terminal un card a fost blocat in acel terminal
+nu se va mai putea loga un alt client. Singurele comenzi posibile fiind unlock,quit.
+Orice alta comanda va intoarce eroarea 5 "Card blocat". Pentru a verifica daca un 
+card a fost blocat intr-o sesiune in client se tine o variabila booleana, updata in 
+momentul in care un card este blocat sau deblocat,sau in momentul in care acestaa este
+deblocat,iar in server se retine indexul ultimului card.
+
+
+
+----------- 
++  QUIT  +  Pentru a folosi quit la server, se itereaza prin arrayul de socketi activi
+----------- ai serverului si este trimis mesajul quit fiecarui client,dupa care serverul se 
+inchide.
+
+
+PS : Daca se verifica serverul si clientul in editorul gedit,este posibil ca indentarea sa fie
+modificata,in acest caz setati dimensiunea tabului la 4 :) 
+
+
+
+
+
+
