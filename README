@@ -1,0 +1,23 @@
+> run.sh 
+	Aplica make clean si make atat in link_emulator cat si in directorul curent (pentru a sterge fisierele executabile,obiect si fisierele
+	de output) si ruleaza ./run_experiment.sh. (Pentru rulari consecutive)
+
+> Structurile noi definite au fost adaugate in lib.h
+
+
+> Pentru a reprezenta un pachet MINI-KERMIT am definit structura mini_kermit,pentru capul data al pachetului Send-Init am definit structura
+  s_pckg.Pentru fiecare tip de pachet (S,F,D,Z,B,Y,N) am implementat o functie care intoarce un mini_kermit corespunzator structurii
+  fiecaruia.Pentru a obtine mesajul ce va fi scris in payload de sender am implementat functiile mini_kermit_to_char si init_pckg_to_char.
+  Pentru a obtine informatii din payloadul unui pachet am implementat functiile getLength,getSeq,getCRC,getData,getType,getMARK care primesc
+  payloadul unui pachet si intorc valoarea campurilor LEN,SEQ,CHECK,DATA,TYPE,respectiv MARK.
+
+> Pentru a reprezenta un fisier am definit structura filePckgs care contine un mini_kermit array ce contine fiecare pachet al fisierului si 
+  numarul de pachete al fisierului.
+
+> Pentru a transmite fisierele senderul imparte fiecare fisier in pachete cu ajutorul functiei makePckgs care primeste fisierele de impartit 
+  in pachete si numarul acestora. makePckgs intoarce un array de filePckgs. Primul element din array (reprezentarea primul fisier) contine
+  pe prima pozitie din arrayul cu pachete pachetul Send-Init al senderului,iar ultimul element ( reprezentarea ultimului fisier) contine 
+  pachetul End of Transmission. Fiecare pachet este initializat cu numarul de secventa 0. In momentul transmiterii pachetului de catre sender
+  numarul de secventa este modificat cu ajutorul functiei newSeqMiniKermit care schimba numarul de secventa si recalculeaza CRC.
+
+> PS: Pentru mai multe pachete pierdute sau corupte e posibil sa nu functioneze corespunzator.
